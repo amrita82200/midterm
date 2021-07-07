@@ -1,3 +1,4 @@
+import 'package:chatappmidterm/models/chatMessageModel.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailPage extends StatefulWidget {
@@ -7,6 +8,16 @@ class ChatDetailPage extends StatefulWidget {
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
+  List<ChatMessage> messages = [
+    ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
+    ChatMessage(messageContent: "How have you been?", messageType: "receiver"),
+    ChatMessage(
+        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
+        messageType: "sender"),
+    ChatMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
+    ChatMessage(
+        messageContent: "Is there any thing wrong?", messageType: "sender"),
+  ];
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -70,6 +81,36 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       ),
       body: Stack(
         children: <Widget>[
+          ListView.builder(
+            itemCount: messages.length,
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: 10, bottom: 10),
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Container(
+                padding:
+                    EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                child: Align(
+                  alignment: (messages[index].messageType == "receiver"
+                      ? Alignment.topLeft
+                      : Alignment.topRight),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: (messages[index].messageType == "receiver"
+                          ? Colors.grey.shade200
+                          : Colors.blue[200]),
+                    ),
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      messages[index].messageContent,
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
